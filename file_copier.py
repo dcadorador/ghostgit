@@ -3,10 +3,19 @@ from tkinter import ttk, filedialog, messagebox
 import os
 import shutil
 from pathlib import Path
+import sys
 
 class FileCopierApp:
     def __init__(self, root):
         self.root = root
+        if getattr(sys, 'frozen', False):
+            # Running in a PyInstaller bundle
+            base_path = sys._MEIPASS
+        else:
+            # Running as a normal script
+            base_path = os.path.dirname(__file__)
+        icon_path = os.path.join(base_path, "ghostgit.png")
+        self.root.iconphoto(True, tk.PhotoImage(file=icon_path))
         self.root.title("File Copier")
         self.root.geometry("600x400")
         
